@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="container mx-auto flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="text-lg font-bold">
-            YourLogo
+            AyuSharks
           </Link>
 
           {/* Navigation Links */}
@@ -45,18 +45,18 @@ const Navbar = () => {
           <Link to="/explore" className="text-white">
             Explore
           </Link>
-          <Link to="/resource" className="text-white">
+          {/* <Link to="/resource" className="text-white">
             Resource
-          </Link>
+          </Link> */}
           <Link to="/meet" className="text-white">
             Meeting
           </Link>
           <Link to="/community" className="text-white">
             Community
           </Link>
-          <Link to="/mentorship" className="text-white">
+          {/* <Link to="/mentorship" className="text-white">
             Mentorship
-          </Link>
+          </Link> */}
           <Link to="/connections" className="text-white">
             Connections
           </Link>
@@ -65,6 +65,9 @@ const Navbar = () => {
           </Link>
           <Link to="/posts" className="text-white">
             posts
+          </Link>
+          <Link to="/dashboard/startup/GGv3N4LxLoZ637HQNYLkNvvbT0U2" className="text-white">
+            Dashboard
           </Link>
         </div>
 
