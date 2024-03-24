@@ -3,9 +3,9 @@ import React from 'react';
 function Stat() {
   const stats = [
     { id: 1, name: 'Total investors', value: '44 ' },
-    { id: 2, name: 'total revenue', value: '10000' },
-    { id: 3, name: 'recent connections', value: '40' },
-    { id: 4, name: 'growth monthly', value: '46%' },
+    { id: 2, name: 'Total revenue', value: '10 M' },
+    { id: 3, name: 'Recent connections', value: '2 K+' },
+    { id: 4, name: 'Growth monthly', value: '25%' },
 
   ];
 

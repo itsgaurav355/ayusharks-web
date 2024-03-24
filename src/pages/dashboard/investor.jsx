@@ -8,6 +8,7 @@ import Stat from './stat';
 
 import InvestorStat from './investorstat';
 import InvestorLineChart from './investorLineChart';
+import LineChart from './linechart';
 
 function InvestorDashboard() {
   const { userId } = useParams();

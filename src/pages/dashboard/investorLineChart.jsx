@@ -5,6 +5,7 @@ import { db } from '../../firebase';
 
 function InvestorLineChart({ currentUser }) {
   const [product, setProduct] = useState([]);
+  const [csvFile, setCsvFile] = useState(null);
   const [option, setOption] = useState({
     title: { text: '' },
     xaxis: {
@@ -41,32 +42,44 @@ function InvestorLineChart({ currentUser }) {
     }
   };
 
-  const handleFileUpload = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      try {
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          const text = e.target.result;
-          const lines = text.split('\n');
-          const parsedData = lines
-            .map((line) => parseInt(line.trim(), 10))
-            .filter((number) => !isNaN(number)); // Filter out NaN values
-
-          if (parsedData.length > 0) {
-            const userRef = doc(db, 'users', currentUser.uid); // Use currentUser.uid here
+  const processData = async () => {
+    if (csvFile) {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const text = e.target.result;
+        const lines = text.split('\n');
+        const parsedData = lines
+          .slice(1) // Skip header row
+          .map((line) => {
+            const [time, revenue] = line.split(',').map(Number);
+            return revenue;
+          })
+          .filter((revenue) => !isNaN(revenue)); // Filter out NaN values
+        console.log("Bhejne wala data :" + parsedData);
+        if (parsedData.length > 0) {
+          try {
+            const userRef = doc(db, 'users', currentUser.uid);
             await updateDoc(userRef, {
-              'startupDetails.T-shirt': parsedData,
+              'startupDetails.T': parsedData,
             });
             fetchData(); // Refresh chart data after update
+          } catch (error) {
+            console.error('Error updating data: ', error);
           }
-        };
-        reader.readAsText(file);
-      } catch (error) {
-        console.error('Error uploading file: ', error);
-      }
+        }
+      };
+      reader.readAsText(csvFile);
     }
   };
+  
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCsvFile(file);
+    }
+  };
+
 
 
   return (
@@ -75,7 +88,7 @@ function InvestorLineChart({ currentUser }) {
         <div className='bg-blue-900 p-5 text-white  text-xl mb-5 rounded'>
           <h2 className='mb-3 text-2xl font-bold'>Startup revenue</h2>
           <input type="file" accept=".csv" onChange={handleFileUpload} /><br />
-          <button className='bg-sky-100 mt-5 text-black px-4 py-2 rounded'>Upload and Update Data</button>
+          <button className='bg-sky-100 mt-5 text-black px-4 py-2 rounded' onClick={processData}>Upload and Update Data</button>
         </div>
         <Chart type="line" width={600} height={350} series={product} options={option} />
       </div>

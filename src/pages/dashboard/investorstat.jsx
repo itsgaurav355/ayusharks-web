@@ -3,9 +3,9 @@ import React from 'react';
 function InvestorStat() {
   const stats = [
     { id: 1, name: 'Total Money Invested', value: '44 million' },
-    { id: 2, name: 'Total Return', value: '119 trillion' },
-    { id: 3, name: 'Total Startup', value: '46,000' },
-    { id: 4, name: 'Total Connections', value: '46,000' },
+    { id: 2, name: 'Total Return', value: '119 million' },
+    { id: 3, name: 'Total Startup', value: '24' },
+    { id: 4, name: 'Total Connections', value: '2 k+' },
 
   ];
 

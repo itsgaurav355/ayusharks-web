@@ -21,6 +21,7 @@ const LineChart = () => {
       const userData = [];
       querySnapshot.forEach((doc) => {
         const data = doc.data();
+        console.log(data.startupDetails['T']);
         if (data.startupDetails && data.startupDetails['T']) {
           userData.push({
             name: 'T',
@@ -28,13 +29,12 @@ const LineChart = () => {
           });
         }
       });
-
+      
       setProduct(userData);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
-
   const processData = async () => {
     if (csvFile) {
       const reader = new FileReader();
@@ -46,8 +46,9 @@ const LineChart = () => {
           .map((line) => {
             const [time, revenue] = line.split(',').map(Number);
             return revenue;
-          });
-
+          })
+          .filter((revenue) => !isNaN(revenue)); // Filter out NaN values
+        console.log("Bhejne wala data :" + parsedData);
         if (parsedData.length > 0) {
           try {
             const userRef = doc(db, 'users', currentUser.uid);
@@ -63,6 +64,7 @@ const LineChart = () => {
       reader.readAsText(csvFile);
     }
   };
+  
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];

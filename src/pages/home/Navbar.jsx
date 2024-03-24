@@ -1,25 +1,43 @@
-import React, { useState, useContext } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import StoreIcon from "@mui/icons-material/Store";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import React, { useState, useContext ,useEffect} from 'react';
+import { Link } from 'react-router-dom';
+
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { AuthContextProvider, AuthContext, useAuth } from '../../context/AuthContext'
-import { Button } from '@mui/material';
+import {useAuth } from '../../context/AuthContext'
 import { auth } from '../../firebase';
+import { getDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase';
 const Navbar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [userType, setUserType] = useState("");
   const {currentUser} = useAuth();
+
+  useEffect(() => {
+    fetchData();
+  }, [currentUser.uid]);
+  
+  const fetchData = async () => {
+    try {
+      const userRef = doc(db, 'users', currentUser.uid);
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        const accType = userData.accType;
+        setUserType(accType);
+      } else {
+        console.error('User document does not exist.');
+      }
+    } catch (error) {
+      console.error('Error fetching data: ', error);
+    }
+  };
+  
+  
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
@@ -66,7 +84,7 @@ const Navbar = () => {
           <Link to="/posts" className="text-white">
             posts
           </Link>
-          <Link to="/dashboard/startup/GGv3N4LxLoZ637HQNYLkNvvbT0U2" className="text-white">
+          <Link to={`/dashboard/${userType}/${currentUser.uid}`} className="text-white">
             Dashboard
           </Link>
         </div>
