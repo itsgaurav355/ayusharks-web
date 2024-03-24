@@ -80,6 +80,8 @@ function Requests() {
       console.log('Connection request accepted successfully');
     } catch (error) {
       console.error('Error accepting connection request:', error);
+    }finally{
+      fetchConnectionRequests();
     }
   };
 

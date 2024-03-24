@@ -7,8 +7,8 @@ import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
-import {useAuth } from '../../context/AuthContext'
-import { auth } from '../../firebase';
+import {useAuth ,AuthContext} from '../../context/AuthContext'
+
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase';
 const Navbar = () => {
@@ -16,6 +16,7 @@ const Navbar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [userType, setUserType] = useState("");
   const {currentUser} = useAuth();
+  const { logout } = useContext(AuthContext);
 
   useEffect(() => {
     fetchData();
@@ -41,9 +42,8 @@ const Navbar = () => {
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
-  const handleLogout = async () => {
-    auth.signOut();
-  };
+ 
+  
 
   return (
     <div>
@@ -92,7 +92,7 @@ const Navbar = () => {
 
           {/* Profile, Login, Signup */}
           <div className="space-x-4">
-            <Link to = {"/login"} onClick={handleLogout}>
+            <Link onClick={logout} to={"/"}>
               logout
             </Link>
           </div>

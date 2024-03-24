@@ -184,11 +184,16 @@ function StartupDashboard() {
       ) : (
         <p>Loading...</p>
       )}
-       {connectionStatus === 'idle' && (
+       {userId != currentUser.uid  && connectionStatus === 'idle'  (
           <button onClick={handleConnect} className="bg-blue-500 text-white px-4 py-2 rounded">
             Connect
           </button>
         )}
+       {/* {connectionStatus === 'idle' && (
+          <button onClick={handleConnect} className="bg-blue-500 text-white px-4 py-2 rounded">
+            Connect
+          </button>
+        )} */}
         {connectionStatus === 'pending' && (
           <p className="text-gray-500">Request pending...</p>
         )}

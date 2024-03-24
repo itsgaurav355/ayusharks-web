@@ -58,7 +58,7 @@ function App() {
     <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
-          <Route path="/">
+          <Route path="/" >
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="/chat/:userId" element={<RequireAuth><ChatContainer /></RequireAuth>} />
@@ -70,7 +70,7 @@ function App() {
             <Route path="/resource" element={<RequireAuth><Resources /></RequireAuth>} />
             <Route path="/community" element={<RequireAuth><Community /></RequireAuth>} />
             <Route path="/requests" element={<RequireAuth><Requests /></RequireAuth>} />
-            <Route index element={<RequireAuth><Home selectedUser={selectedUser} onSelectUser={setSelectedUser} /></RequireAuth>} />
+            <Route index element={<Home/>}/>
             <Route path="dashboard/:dashboardType/:userId" element={<RequireAuth><DashboardRouter /></RequireAuth>} />
             <Route path="selection" element={<RequireAuth><Selection /></RequireAuth>} />
             <Route path="details/startup" element={<RequireAuth><StartupDetails /></RequireAuth>} />

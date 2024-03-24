@@ -191,11 +191,16 @@ function InvestorDashboard() {
        ) : (
         <p>Loading...</p>
       )}
-        {connectionStatus === 'idle' && (
+        {currentUser.uid != user.uid &&  connectionStatus === 'idle' && (
+            <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleConnect}>
+              
+            </button>
+          )}
+          {/* {connectionStatus === 'idle' (
             <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleConnect}>
               Connect
             </button>
-          )}
+          )} */}
           {connectionStatus === 'pending' && (
             <p className="text-gray-500">Request pending...</p>
           )}
