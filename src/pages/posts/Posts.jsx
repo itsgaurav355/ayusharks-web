@@ -19,7 +19,7 @@ import {
 import { AuthContext } from '../../context/AuthContext';
 import { increment } from 'firebase/firestore';
 import Navbar from '../home/Navbar';
-
+import '../posts/Posts.css';
 function Posts() {
   const { currentUser } = useContext(AuthContext);
   const [posts, setPosts] = useState([]);
@@ -155,84 +155,85 @@ function Posts() {
 
   return (
     <>
-    <Navbar />
-    <div className="max-w-4xl mx-auto mt-8 p-6 bg-gray-900 text-white rounded shadow-md">
-      <h1 className="text-3xl font-semibold mb-6 text-center">posts</h1>
-
-      {/* Image Upload Section */}
-      <div className="mb-4 flex items-center justify-center">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="hidden"
-          id="fileInput"
-        />
-        <label htmlFor="fileInput" className="cursor-pointer">
-          <span className="text-blue-500 hover:underline">Choose a photo</span>
-        </label>
-        <input
-          type="text"
-          placeholder="Enter caption"
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          className="border-b-2 border-white bg-transparent text-white focus:outline-none mx-4"
-        />
-        <button onClick={handleUpload} className="bg-blue-500 text-white px-4 py-2 rounded">
-          Upload
-        </button>
-      </div>
-
-      {/* Display Posts */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-96">
-        {posts.map((post) => (
-          <div key={post.id} className="bg-gray-800 p-4 rounded-md shadow-md">
-            <p className="text-blue-500 font-semibold mb-2">{post.email}</p>
-            <img
-              src={post.imageURL}
-              alt={`Post by ${post.userId}`}
-              className="w-full h-56 object-cover rounded mb-4 cursor-pointer"
-              onClick={() => handleExpandCaption(post.caption)}
-            />
-            <p className="text-gray-400 overflow-hidden">
-              {post.caption.length > 50 ? (
-                <>
-                  {post.caption.substring(0, 50)}...
-                  <span
-                    className="text-blue-500 cursor-pointer hover:underline"
-                    onClick={() => handleExpandCaption(post.caption)}
-                  >
-                    Read more
-                  </span>
-                </>
-              ) : (
-                post.caption
-              )}
-            </p>
-            <div className="flex items-center justify-between mt-4">
-              <button onClick={() => handleLike(post.id)} className="text-white hover:text-blue-500">
-                Like
+      <Navbar />
+      <div className="posts-container">
+        <h1 className="posts-header">Create Post</h1>
+  
+        {/* Image Upload Section */}
+        <div className="upload-section">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+            id="fileInput"
+          />
+          <label htmlFor="fileInput" className="cursor-pointer">
+            <span className="text-blue-500 hover:underline">Choose a photo</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Enter caption"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            className="caption-input"
+          />
+          <button onClick={handleUpload} className="upload-button">
+            Upload
+          </button>
+        </div>
+  
+        {/* Display Posts */}
+        <h1 className="posts-header">Posts</h1>
+        <div className="grid-container">
+          {posts.map((post) => (
+            <div key={post.id} className="post-card">
+              <p className="post-email">{post.email}</p>
+              <img
+                src={post.imageURL}
+                alt={`Post by ${post.userId}`}
+                className="post-image"
+                onClick={() => handleExpandCaption(post.caption)}
+              />
+              <p className="post-caption">
+                {post.caption.length > 50 ? (
+                  <>
+                    {post.caption.substring(0, 50)}...
+                    <span
+                      className="read-more"
+                      onClick={() => handleExpandCaption(post.caption)}
+                    >
+                      Read more
+                    </span>
+                  </>
+                ) : (
+                  post.caption
+                )}
+              </p>
+              <div className="post-like-section">
+                <button onClick={() => handleLike(post.id)} className="like-button">
+                  Like
+                </button>
+                <span className="like-count">{post.likes} likes</span>
+              </div>
+            </div>
+          ))}
+        </div>
+  
+        {/* Expanded Caption Modal */}
+        {expandedCaption && (
+          <div className="modal-container">
+            <div className="modal-content">
+              <p className="expanded-caption">{expandedCaption}</p>
+              <button onClick={handleCloseModal} className="close-button">
+                Close
               </button>
-              <span className="text-gray-500">{post.likes} likes</span>
             </div>
           </div>
-        ))}
+        )}
       </div>
-
-      {/* Expanded Caption Modal */}
-      {expandedCaption && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center">
-          <div className="bg-gray-800 p-4 rounded-md">
-            <p className="text-white">{expandedCaption}</p>
-            <button onClick={handleCloseModal} className="text-blue-500 hover:underline mt-4">
-              Close
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
     </>
-  );
+  );  
 }
 
 export default Posts;

@@ -43,7 +43,7 @@ import JitsiMeetComponent from "./pages/chat/JitsiMeetComponent";
 
 import MentorA from "./pages/details/MentorA";
 import MentorB from "./pages/details/MentorB";
-
+import Mentor from "./pages/mentor/Mentor";
 import UserList from "./components/admin/UserList";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
@@ -70,6 +70,7 @@ function App() {
             <Route path="/resource" element={<RequireAuth><Resources /></RequireAuth>} />
             <Route path="/community" element={<RequireAuth><Community /></RequireAuth>} />
             <Route path="/requests" element={<RequireAuth><Requests /></RequireAuth>} />
+            <Route path="/mentor" element={<RequireAuth> <Mentor/> </RequireAuth>} />
             <Route index element={<Home/>}/>
             <Route path="dashboard/:dashboardType/:userId" element={<RequireAuth><DashboardRouter /></RequireAuth>} />
             <Route path="selection" element={<RequireAuth><Selection /></RequireAuth>} />

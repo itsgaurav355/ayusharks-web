@@ -72,9 +72,9 @@ const Navbar = () => {
           <Link to="/community" className="text-white">
             Community
           </Link>
-          {/* <Link to="/mentorship" className="text-white">
+           <Link to="/mentor" className="text-white">
             Mentorship
-          </Link> */}
+          </Link> 
           <Link to="/connections" className="text-white">
             Connections
           </Link>

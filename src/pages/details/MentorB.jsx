@@ -9,12 +9,10 @@ import MentorA from "./MentorA";
 
 function MentorB() {
     const [newDetails, setNewDetails] = useState({
-        
         website_mobile_ink: "",
-        
         startup_name: "",
         profileImage: "",
-        
+        sector: "",
         investment:"",
         profit:"",
         logo: "", // Added the logo property to newDetails
@@ -192,6 +190,24 @@ function MentorB() {
                                    
                                     onChange={handleChange}
                                     required />
+                                <div className="flex-1">
+                                <label className="block mb-1 text-sm font-medium text-white">Sector</label>
+                                <select
+                                    name="sector" id="sector"
+                                    className="w-full p-2 bg-gray-600 rounded-md outline-none text-white placeholder:text-gray-200"
+                                    value={newDetails.sector}
+                                    onChange={handleChange} required
+                                    >
+                                    <option value="" disabled selected>Select your sector</option>
+                                    <option value="ayurveda">Ayurveda</option>
+                                    <option value="yoga">Yoga</option>
+                                    <option value="unani">Unani</option>
+                                    <option value="siddha">Siddha</option>
+                                    <option value="homeopthy">Homeopthy</option>
+                                    
+                                </select>
+                                </div>
+      
                             </>
                         )}
                        <br /><br /><br />
@@ -199,7 +215,7 @@ function MentorB() {
                             <button
                                 type="submit"
                                 className="mt-5 bg-blue-300 text-black font-bold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300">
-                                <Link to = {"/"}>Submit</Link>
+                                <Link to = {"/explore"}>Submit</Link>
                             </button>
                         </div>
                     </div>
